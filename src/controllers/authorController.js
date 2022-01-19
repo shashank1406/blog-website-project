@@ -2,7 +2,6 @@ const authorModel = require("../model/authorModel");
 const validator = require('validator')
 
 
-
 // ---------------------- validation function -------------------------------------------------------------------------------------//
 
 const isValid = function (value) {
@@ -10,6 +9,7 @@ const isValid = function (value) {
     if (typeof value === 'string' && value.trim().length === 0) return false
     return true;
 }
+
 const isValidRequestBody = function (requestBody) {
     return Object.keys(requestBody).length > 0
 }
@@ -20,6 +20,7 @@ const isValidRequestBody = function (requestBody) {
 const createAuthor = async function (req, res) {
     try {
         let requestBody = req.body
+
         if (!isValidRequestBody(requestBody)) {
             res.status(400).send({ status: false, message: 'Invalid request parameters. Please provide author details' })
             return
@@ -38,6 +39,7 @@ const createAuthor = async function (req, res) {
             res.status(400).send({ status: false, message: 'Title is required' })
             return
         }
+
         if (!isValid(requestBody.email)) {
             res.status(400).send({ status: false, message: 'Title is required' })
             return
@@ -49,6 +51,7 @@ const createAuthor = async function (req, res) {
         if (!(validator.isEmail(requestBody.email))) {
             return res.status(400).send({ status: false, msg: 'enter valid email' })
         }
+        
         const isEmailAlreadyUsed = await authorModel.findOne({ email: requestBody.email });
 
         if (isEmailAlreadyUsed) {

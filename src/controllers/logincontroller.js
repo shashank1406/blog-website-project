@@ -2,8 +2,6 @@
 const authorModel = require("../model/authorModel")
 const jwt = require('jsonwebtoken')
 
-
-
 // ---------------------- validation function ----------------------------------------------------------------------------------
 
 
@@ -27,6 +25,7 @@ const login = async function (req, res) {
             if (!check) {
                 return res.status(400).send({ status: true, msg: "Invalid login credentials" })
             }
+            
             let payload = { _id: check._id }
             let token = jwt.sign(payload, 'projectOne')
             res.header('x-api-key', token);
